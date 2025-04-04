@@ -50,10 +50,8 @@ readTextFileLines("/etc/locale.gen").then(async (rows) => {
   languages.value.sort((a, b) => a.title.localeCompare(b.title));
 });
 
-async function readKeymaps() {
-  const content = await readTextFile("/usr/share/X11/xkb/rules/base.xml");
+readTextFile("/usr/share/X11/xkb/rules/base.xml").then((content) => {
   const doc = new DOMParser().parseFromString(content, "application/xml");
-
   const layoutsTags = doc.querySelectorAll("layoutList > layout");
 
   for (const layout of layoutsTags) {
@@ -77,9 +75,7 @@ async function readKeymaps() {
   }
 
   keymaps.value.sort((a, b) => a.title.localeCompare(b.title));
-}
-
-readKeymaps();
+});
 </script>
 
 <template>
