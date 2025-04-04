@@ -30,7 +30,7 @@ const { nextLink } = useInstallerStepper();
 nextLink.value = "/01-try";
 
 readTextFileLines("/etc/locale.gen").then(async (rows) => {
-  const regex = /^#?\s*([a-z]{2}_[A-Z]{2}).UTF-8/gm;
+  const regex = /^#?\s*([a-z]{2}_[A-Z]{2})\.UTF-8/gm;
   languages.value = [];
   for await (const line of rows) {
     const lang = regex.exec(line);
