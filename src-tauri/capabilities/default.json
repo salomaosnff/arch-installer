@@ -9,7 +9,10 @@
     "core:window:allow-set-title",
     {
       "identifier": "fs:read-all",
-      "allow": [{ "path": "/etc/locale.gen" }]
+      "allow": [
+        { "path": "/etc/locale.gen" },
+        { "path": "/usr/share/X11/xkb/rules/base.xml" }
+      ]
     }
   ]
 }
