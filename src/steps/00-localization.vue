@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useInstallerStepper } from "../composables/useStepper";
 import { readTextFile, readTextFileLines } from "@tauri-apps/plugin-fs";
+import { useInstallerStepper } from "../composables/useStepper";
 
 useWindowTitle({
   title: "Bem-vindo ao Arch Linux",
@@ -19,11 +19,12 @@ interface KeyboardLayout {
 }
 
 const language = ref("pt_BR");
-const useSameKeymap = ref(true);
+const timezone = ref("America/Sao_Paulo");
 const keymap = ref<{ layout: KeyboardLayout | null, variant?: string; }>({ layout: null, variant: "" });
 
 const keymaps = ref<Array<KeyboardLayout>>([]);
 const languages = ref<Array<{ code: string; title: string }>>([]);
+const timezones = ref<Array<{ code: string; title: string }>>([]);
 
 const { nextLink } = useInstallerStepper();
 
@@ -33,7 +34,8 @@ readTextFileLines("/etc/locale.gen").then(async (rows) => {
   const regex = /^#?\s*([a-z]{2}_[A-Z]{2})\.UTF-8/gm;
   languages.value = [];
   for await (const line of rows) {
-    const lang = regex.exec(line);
+    const lang = regex.exec(line.trim());
+
     if (!lang) {
       continue;
     }
@@ -62,15 +64,25 @@ readTextFile("/usr/share/X11/xkb/rules/base.xml").then((content) => {
       continue;
     }
 
+    if (layoutName === "custom") {
+      continue;
+    }
+
     const layoutVariants = Array.from(layout.querySelectorAll("variantList > variant"), (item) => ({
       code: item.querySelector("configItem > name")?.textContent!,
       title: item.querySelector("configItem > description")?.textContent!,
-    }));
+    })).sort((a, b) => a.title.localeCompare(b.title));
 
     keymaps.value.push({
       code: layoutName,
       title: layoutDescription,
-      variants: layoutVariants,
+      variants: [
+        {
+          code: layoutName,
+          title: layoutDescription,
+        },
+        ...layoutVariants
+      ],
     });
   }
 
@@ -90,6 +102,8 @@ readTextFile("/usr/share/X11/xkb/rules/base.xml").then((content) => {
       <label>
         <p>Idioma</p>
         <select v-model="language" class="w-full">
+          <option selected disabled :value="null">Selecione...</option>
+
           <option v-for="lang in languages" :key="lang.code" :value="lang.code">
             {{ lang.title }}
           </option>
@@ -97,32 +111,29 @@ readTextFile("/usr/share/X11/xkb/rules/base.xml").then((content) => {
       </label>
 
       <label>
+        <p>Fuso horário</p>
+        <select v-model="timezone" class="w-full">
+          <option selected disabled :value="null">Selecione...</option>
+          <option v-for="item in timezones" :key="item.code" :value="item.code">
+            {{ item.title }}
+          </option>
+        </select>
+      </label>
+
+      <label>
         <p>Layout do Teclado</p>
         <select v-model="keymap.layout" class="w-full">
+          <option selected disabled :value="null">Selecione...</option>
           <option v-for="item in keymaps" :key="item.code" :value="item">{{ item.title }}</option>
         </select>
       </label>
 
-      <pre>
-        {{ {
-          layout: keymap.layout?.code,
-          variant: keymap.variant,
-        } }}
-      </pre>
-
       <label v-if="keymap.layout?.variants.length">
         <p>Variante do Teclado</p>
         <select v-model="keymap.variant" class="w-full">
+          <option selected disabled :value="null">Selecione...</option>
           <option v-for="item in keymap.layout.variants" :key="item.code" :value="item.code">{{ item.title }}</option>
         </select>
-      </label>
-
-      <label class="flex gap-1 items-start">
-        <input class="mt-1" type="checkbox" v-model="useSameKeymap" />
-        <p>
-          Utilizar essa configuração de idioma e layout de teclado para o
-          sistema instalado
-        </p>
       </label>
     </div>
   </ImageContent>

@@ -2,7 +2,9 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
-  "windows": ["main"],
+  "windows": [
+    "main"
+  ],
   "permissions": [
     "core:default",
     "opener:default",
@@ -10,9 +12,17 @@
     {
       "identifier": "fs:read-all",
       "allow": [
-        { "path": "/etc/locale.gen" },
-        { "path": "/usr/share/X11/xkb/rules/base.xml" }
+        {
+          "path": "/etc/locale.gen"
+        },
+        {
+          "path": "/usr/share/X11/xkb/rules/base.xml"
+        },
+        {
+          "path": "/usr/share/zoneinfo/zone.tab"
+        }
       ]
-    }
+    },
+    "shell:default"
   ]
 }
