@@ -88,6 +88,32 @@ readTextFile("/usr/share/X11/xkb/rules/base.xml").then((content) => {
 
   keymaps.value.sort((a, b) => a.title.localeCompare(b.title));
 });
+
+async function getTimezones() {
+  for await (const line of await readTextFileLines("/usr/share/zoneinfo/zone.tab")) {
+    if (line.startsWith("#") || line.trim() === "") {
+      continue;
+    }
+    const timezone = line.split(/\s+/)?.[2];
+    
+    if (!timezone) {
+      continue;
+    }
+
+    timezones.value.push({
+      code: timezone,
+      title: timezone.replace(/_/g, " ").replace(/\//g, ", "),
+    });
+  }
+
+  timezones.value.sort((a, b) => a.title.localeCompare(b.title));
+}
+
+watch(() => keymap.value.layout?.code, (newLayout) => {
+  keymap.value.variant = newLayout
+});
+
+getTimezones()
 </script>
 
 <template>
