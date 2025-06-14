@@ -6,6 +6,9 @@ useWindowTitle({
 
 const router = useRouter();
 
+const { nextLink } = useInstallerStepper();
+nextLink.value = '/05-parted';
+
 </script>
 <template>
   <div class="w-full">

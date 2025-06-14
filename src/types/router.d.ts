@@ -23,5 +23,6 @@ declare module 'vue-router/auto-routes' {
     '/01-try': RouteRecordInfo<'/01-try', '/01-try', Record<never, never>, Record<never, never>>,
     '/03-user': RouteRecordInfo<'/03-user', '/03-user', Record<never, never>, Record<never, never>>,
     '/04-partition': RouteRecordInfo<'/04-partition', '/04-partition', Record<never, never>, Record<never, never>>,
+    '/05-parted': RouteRecordInfo<'/05-parted', '/05-parted', Record<never, never>, Record<never, never>>,
   }
 }
