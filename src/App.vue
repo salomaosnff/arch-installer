@@ -1,43 +1,20 @@
 <script setup lang="ts">
-import { invoke } from "@tauri-apps/api/core";
-import { ref } from "vue";
+import { watch } from "vue";
+import { useInstallerStore } from "./stores/installer";
+const installerStore = useInstallerStore();
+const props = defineProps<{
+  config: object;
+}>();
 
-const greetMsg = ref("");
-const name = ref("");
-
-async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsg.value = await invoke("greet", { name: name.value });
-}
-
-useWindowTitle({
-  titleTemplate: (title) => `${title} - Instalador do Arch Linux`,
-})
-
-
+watch(
+  () => props.config,
+  (config) => {
+    installerStore.config = config;
+  },
+  { immediate: true, deep: true }
+);
 </script>
 
 <template>
-  <InstallerStepper>
-    <RouterView></RouterView>
-  </InstallerStepper>
+  <RouterView />
 </template>
-
-<style>
-* {
-  box-sizing: border-box;
-}
-
-html,
-body,
-#app {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-
-@layer page {}
-</style>
