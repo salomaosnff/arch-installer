@@ -1,0 +1,64 @@
+{
+  "whitelabel": {
+    "short_name": "Arch",
+    "long_name": "Arch Linux",
+    "primary_color": "#1794D2",
+    "logo": "/logo.png"
+  },
+  "languages": [
+    {
+      "title": "Português do Brasil",
+      "locale": "pt_BR.UTF-8"
+    },
+    {
+      "title": "English (US)",
+      "locale": "en_US.UTF-8"
+    }
+  ],
+  "keymaps": [
+    {
+      "title": "Português do Brasil (ABNT2)",
+      "keymap": {
+        "graphical": "br",
+        "console": "br-abnt2"
+      }
+    },
+    {
+      "title": "English (US)",
+      "keymap": {
+        "graphical": "us",
+        "console": "us"
+      }
+    }
+  ],
+  "additional_packages": [
+    {
+      "title": "Visual Studio Code",
+      "source": "AUR",
+      "package": "visual-studio-code-bin",
+      "logo": "https://code.visualstudio.com/assets/images/code-stable.png",
+      "description": "A powerful code editor redefined and optimized for building and debugging modern web and cloud applications."
+    },
+    {
+      "title": "Brave Browser",
+      "source": "AUR",
+      "package": "brave-bin",
+      "logo": "https://brave.com/static-assets/images/brave-logo-sans-text.svg",
+      "description": "Brave is a free and open-source web browser developed by Brave Software, Inc. It is based on the Chromium web browser and focuses on privacy and speed."
+    },
+    {
+      "title": "Discord",
+      "source": "AUR",
+      "package": "discord",
+      "logo": "https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e3d80db9971f10a9757c99_Symbol.svg",
+      "description": "Discord is a VoIP, instant messaging and digital distribution platform designed for creating communities."
+    },
+    {
+      "title": "Steam",
+      "source": "repo",
+      "package": "steam",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/1200px-Steam_icon_logo.svg.png",
+      "description": "Steam is a digital distribution platform developed by Valve Corporation for purchasing and playing video games."
+    }
+  ]
+}

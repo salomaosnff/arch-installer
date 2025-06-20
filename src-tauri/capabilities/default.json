@@ -8,21 +8,17 @@
   "permissions": [
     "core:default",
     "opener:default",
-    "core:window:allow-set-title",
+    "shell:default",
     {
-      "identifier": "fs:read-all",
+      "identifier": "shell:allow-execute",
       "allow": [
         {
-          "path": "/etc/locale.gen"
-        },
-        {
-          "path": "/usr/share/X11/xkb/rules/base.xml"
-        },
-        {
-          "path": "/usr/share/zoneinfo/zone.tab"
+          "name": "exec-sh",
+          "cmd": "sh",
+          "args": true
         }
       ]
     },
-    "shell:default"
+    "process:default"
   ]
 }
