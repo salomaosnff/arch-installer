@@ -14,9 +14,12 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 const router = useRouter();
 const installerStore = useInstallerStore();
 
+const currentWindow = getCurrentWindow();
+
 async function nextStep() {
   if (installerStore.installType === "try") {
-    return getCurrentWindow().close();
+    console.log(currentWindow)
+    return currentWindow.close()
   }
   return router.push("/disk");
 }

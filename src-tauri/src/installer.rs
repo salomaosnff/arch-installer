@@ -19,19 +19,18 @@ pub async fn start_install(window: Window) {
         "Criando usuario",
     ];
     *RUNNING.lock().unwrap() = true;
-   
-        for i in 0..=100 {
-            window
-                .emit(
-                    "install_progress",
-                    Payload {
-                        progress: i,
-                        text: messages[i as usize % messages.len()].into(),
-                    },
-                )
-                .unwrap();
-            std::thread::sleep(Duration::from_secs(1));
-        }
-        *RUNNING.lock().unwrap() = false;
 
+    for i in 0..=100 {
+        window
+            .emit(
+                "install_progress",
+                Payload {
+                    progress: i,
+                    text: messages[i as usize % messages.len()].into(),
+                },
+            )
+            .unwrap();
+        std::thread::sleep(Duration::from_secs(1));
+    }
+    *RUNNING.lock().unwrap() = false;
 }

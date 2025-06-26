@@ -1,7 +1,7 @@
 use crate::installer::start_install;
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-mod installer; 
+mod installer;
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -12,7 +12,6 @@ fn greet(name: &str) -> String {
 pub fn run() {
     #[cfg(debug_assertions)]
     let builder = tauri::Builder::default()
-        
         .plugin(tauri_plugin_devtools::init());
     #[cfg(not(debug_assertions))]
     let builder = tauri::Builder::default();

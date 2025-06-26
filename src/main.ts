@@ -15,8 +15,13 @@ import { router } from "./router";
 
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { exit } from "@tauri-apps/plugin-process";
+import { isInstalling } from "./stores/installer";
 import { execCommand } from "./utils/sh";
-getCurrentWindow().onCloseRequested(async () => {
+getCurrentWindow().onCloseRequested(async (event) => {
+  if(isInstalling.value){
+    event.preventDefault();
+    return;
+  }
   await execCommand(`
       dconf write /org/gnome/shell/extensions/dash-to-dock/dock-fixed true;
       dconf write /org/gnome/shell/extensions/dash-to-dock/autohide false;

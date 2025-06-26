@@ -57,7 +57,7 @@ DiskService.getDisks().then((result) => {
       class="flex items-center justify-between w-full border-t b-#ddd px-4 py-2"
     >
       <Button severity="secondary" @click="router.back()">Voltar</Button>
-      <Button label="Proximo" :disabled="!installerStore.installDisk" @click="router.push('/user')" />
+      <Button label="Proximo" :disabled="!installerStore.installDisk" @click="router.push('/packages')" />
     </div>
   </div>
 </template>
