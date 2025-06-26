@@ -8,8 +8,11 @@ const router = useRouter();
 
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 const progressData = ref<{ progress: number; text: string }>();
+
+getCurrentWindow().setClosable(false)
 
 listen("install_progress", (event) => {
   progressData.value = event.payload as any;

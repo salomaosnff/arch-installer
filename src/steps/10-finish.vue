@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { exit } from "@tauri-apps/plugin-process";
 import Button from "primevue/button";
 import StepImage from "../svg/completing.vue";
+
+getCurrentWindow().setClosable(true)
 </script>
 
 <template>

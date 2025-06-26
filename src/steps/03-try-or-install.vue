@@ -9,16 +9,16 @@ import Button from "primevue/button";
 import SelectionCard from "../components/selection-card.vue";
 import { useInstallerStore } from "../stores/installer";
 
-import { exit } from '@tauri-apps/plugin-process';
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 const router = useRouter();
 const installerStore = useInstallerStore();
 
-function nextStep(){
-  if(installerStore.installType === 'try'){
-    return exit(0) 
+async function nextStep() {
+  if (installerStore.installType === "try") {
+    return getCurrentWindow().close();
   }
-  return router.push('/disk')
+  return router.push("/disk");
 }
 </script>
 
