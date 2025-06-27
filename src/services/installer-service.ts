@@ -1,3 +1,4 @@
+import { Channel, invoke } from "@tauri-apps/api/core";
 import { readonly, ref } from "vue";
 import { execCommand } from "../utils/sh";
 
@@ -22,6 +23,12 @@ export class InstallerService {
   static #totalCommands = ref(0);
   static #totalRunned = ref(0);
   static #currentTask = ref<Task>();
+  static #channel = new Channel<any>((data) => {
+    const line = data.StdOut || data.StdErr;
+    if(line){
+      this.logs.value += line + "\n";
+    }
+  });
   static logs = ref<string>("");
 
   static addTask(task: Task) {
@@ -51,13 +58,10 @@ export class InstallerService {
   }
 
   static async #execute(command: string) {
-    const { stderr, stdout } = await execCommand(command);
-    if (stderr) {
-      this.logs.value += stderr;
-    }
-    if (stdout) {
-      this.logs.value += stdout;
-    }
+    await invoke("exec_sh", {
+      command: command,
+      channel: this.#channel,
+    });
   }
 
   static get totalCommands() {
@@ -74,11 +78,9 @@ export class InstallerService {
 
   static createTasks(config: InstallConfig) {
     this.addTask({
-      title: 'Atualizando o sistema...',
-      commands: [
-        `pacman -Syu --noconfirm`,
-      ]
-    })
+      title: "Atualizando o sistema...",
+      commands: [`pacman -Syu --noconfirm`],
+    });
     {
       const commands: string[] = [
         `umount -f ${config.device}`,
@@ -173,7 +175,7 @@ export class InstallerService {
       commands: [
         `su - live -c "mkdir -p /tmp/build"`,
         `mkdir -p /mnt/root/repo`,
-        'arch-chroot /mnt pacman -Sy --noconfirm'
+        "arch-chroot /mnt pacman -Sy --noconfirm",
       ],
     });
 
@@ -191,7 +193,9 @@ export class InstallerService {
     }
     this.addTask({
       title: `Instalando pacotes AUR...`,
-      commands: [`arch-chroot /mnt sh -c "pacman --noconfirm -U /root/repo/* && rm -rf /root/repo"`],
+      commands: [
+        `arch-chroot /mnt sh -c "pacman --noconfirm -U /root/repo/* && rm -rf /root/repo"`,
+      ],
     });
 
     this.addTask({

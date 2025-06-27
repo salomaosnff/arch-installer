@@ -1,4 +1,4 @@
-use crate::installer::start_install;
+use crate::installer::exec_sh;
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 mod installer;
@@ -19,7 +19,7 @@ pub fn run() {
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![greet])
-        .invoke_handler(tauri::generate_handler![start_install])
+        .invoke_handler(tauri::generate_handler![exec_sh])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

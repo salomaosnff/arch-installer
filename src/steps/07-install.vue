@@ -2,6 +2,7 @@
 import StepImage from "../svg/loading.vue";
 
 import ProgressBar from "primevue/progressbar";
+import ProgressSpinner from "primevue/progressspinner";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
@@ -43,28 +44,45 @@ const progress = computed(() => {
 
 const log = useTemplateRef("log");
 
-watch(logs, () => {
-  if (log.value) {
-    log.value.scroll({
-      top: log.value.scrollHeight,
-      behavior: "smooth",
-    });
+watch(
+  logs,
+  () => {
+    if (log.value) {
+      log.value.scroll({
+        top: log.value.scrollHeight,
+        behavior: "instant",
+      });
+    }
+  },
+  {
+    flush: "post",
   }
-}, {
-  flush: "post",
-});
+);
 </script>
 
 <template>
-  <div class="w-full max-w-1024px mx-auto pa-8 h-screen overflow-hidden">
-    <StepImage class="h-380px mx-auto mb-8" />
+  <div
+    class="flex flex-col w-full max-w-1024px mx-auto pa-8 h-screen overflow-hidden"
+  >
+    <StepImage class="h-240px mx-auto mb-8" />
 
-    <p class="mb-2">{{ progress.toFixed(0) }}% {{ currentTask?.title }}</p>
+    <p class="flex items-center gap-2 mb-2">
+      <ProgressSpinner
+        style="width: 24px; height: 24px"
+        strokeWidth="2"
+        fill="transparent"
+        animationDuration=".5s"
+        aria-label="Custom ProgressSpinner"
+      />
+      <span>{{ progress.toFixed(0) }}% {{ currentTask?.title }}</span>
+    </p>
     <ProgressBar class="mb-4" :value="progress">
       <span></span>
     </ProgressBar>
-    <pre ref="log" class="h-180px overflow-auto bg-black color-white pa-4 text-3 rounded-md">{{
-      logs
-    }}</pre>
+    <pre
+      ref="log"
+      class="flex-1 min-h-80px overflow-auto bg-black color-white pa-4 text-3 rounded-md"
+      >{{ logs }}</pre
+    >
   </div>
 </template>

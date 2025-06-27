@@ -17,6 +17,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { exit } from "@tauri-apps/plugin-process";
 import { isInstalling } from "./stores/installer";
 import { execCommand } from "./utils/sh";
+
 getCurrentWindow().onCloseRequested(async (event) => {
   if(isInstalling.value){
     event.preventDefault();
