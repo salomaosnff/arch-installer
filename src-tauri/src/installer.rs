@@ -1,36 +1,39 @@
-use std::{sync::Mutex, time::Duration};
+use std::{process::Stdio};
 
-use tauri::{Emitter, Window};
+use tauri::ipc::Channel;
+use tokio::io::AsyncBufReadExt;
 
 #[derive(Clone, serde::Serialize)]
-struct Payload {
-    progress: i32,
-    text: String,
+pub enum CommandOutput {
+    StdOut(String),
+    StdErr(String),
 }
-static RUNNING: Mutex<bool> = Mutex::new(false);
-#[tauri::command]
-pub async fn start_install(window: Window) {
-    if *RUNNING.lock().unwrap() {
-        return;
-    }
-    let messages = vec![
-        "Copiando arquivo do sistema",
-        "Instalando pacotes",
-        "Criando usuario",
-    ];
-    *RUNNING.lock().unwrap() = true;
 
-    for i in 0..=100 {
-        window
-            .emit(
-                "install_progress",
-                Payload {
-                    progress: i,
-                    text: messages[i as usize % messages.len()].into(),
-                },
-            )
-            .unwrap();
-        std::thread::sleep(Duration::from_secs(1));
+#[tauri::command]
+pub async fn exec_sh(command: String, channel: Channel<CommandOutput>)-> i32 {
+    let mut command = tokio::process::Command::new("sh")
+        .args(vec!["-c".to_owned(), command])
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .expect("Falha ao executar o comando.");
+    if let Some(stdout) = command.stdout.take() {
+        let channel = channel.clone();
+        tokio::spawn(async move {
+            let mut reader = tokio::io::BufReader::new(stdout).lines();
+            while let Ok(Some(line)) = reader.next_line().await {
+                channel.send(CommandOutput::StdOut(line)).unwrap();
+            }
+        });
     }
-    *RUNNING.lock().unwrap() = false;
+    if let Some(stderr) = command.stderr.take() {
+        tokio::spawn(async move {
+            let mut reader = tokio::io::BufReader::new(stderr).lines();
+            while let Ok(Some(line)) = reader.next_line().await {
+                channel.send(CommandOutput::StdErr(line)).unwrap();
+            }
+        });
+    }
+    let status = command.wait().await.expect("Falha ao esperar o comando terminar.");
+    return  status.code().unwrap_or_default();
 }

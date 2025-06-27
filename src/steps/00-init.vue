@@ -10,7 +10,6 @@ if(currentWindow.label === 'main'){
     router.replace("/install")
 }
 
-
 </script>
 
 <template>Init</template>
