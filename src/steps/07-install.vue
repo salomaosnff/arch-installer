@@ -5,7 +5,7 @@ import ProgressBar from "primevue/progressbar";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-import { computed } from "vue";
+import { computed, useTemplateRef, watch } from "vue";
 import { InstallerService } from "../services/installer-service";
 import { isInstalling, useInstallerStore } from "../stores/installer";
 const installerStore = useInstallerStore();
@@ -40,6 +40,19 @@ const progress = computed(() => {
   if (totalCommands.value === 0) return 0;
   return (totalRunned.value / totalCommands.value) * 100;
 });
+
+const log = useTemplateRef("log");
+
+watch(logs, () => {
+  if (log.value) {
+    log.value.scroll({
+      top: log.value.scrollHeight,
+      behavior: "smooth",
+    });
+  }
+}, {
+  flush: "post",
+});
 </script>
 
 <template>
@@ -50,7 +63,7 @@ const progress = computed(() => {
     <ProgressBar class="mb-4" :value="progress">
       <span></span>
     </ProgressBar>
-    <pre class="h-180px overflow-auto bg-black color-white pa-4 text-3 rounded-md">{{
+    <pre ref="log" class="h-180px overflow-auto bg-black color-white pa-4 text-3 rounded-md">{{
       logs
     }}</pre>
   </div>

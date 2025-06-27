@@ -30,6 +30,8 @@ export class InstallerService {
   }
 
   static async runAll() {
+    this.logs.value = "";
+
     while (this.#tasks.length > 0) {
       const task = this.#tasks.shift();
       if (!task) {
@@ -41,6 +43,10 @@ export class InstallerService {
         await this.#execute(command);
       }
       this.#currentTask.value = undefined;
+    }
+
+    if (this.logs.value) {
+      await execCommand(`echo "${this.logs.value}" >> ~/install.log`);
     }
   }
 
@@ -67,8 +73,19 @@ export class InstallerService {
   }
 
   static createTasks(config: InstallConfig) {
+    this.addTask({
+      title: 'Atualizando o sistema...',
+      commands: [
+        `pacman -Syu --noconfirm`,
+      ]
+    })
     {
-      const commands: string[] = [`umount ${config.device}`];
+      const commands: string[] = [
+        `umount -f ${config.device}`,
+        `umount -f ${config.device}1`,
+        `umount -f ${config.device}2`,
+        `umount -f -R /mnt`,
+      ];
       if (config.type === "install") {
         commands.push(
           `parted ${config.device} --script mklabel gpt`,
@@ -153,13 +170,18 @@ export class InstallerService {
 
     this.addTask({
       title: `Preparando ambiente AUR...`,
-      commands: [`mkdir -p /tmp/build`, `mkdir -p /mnt/tmp/repo`],
+      commands: [
+        `su - live -c "mkdir -p /tmp/build"`,
+        `mkdir -p /mnt/root/repo`,
+        'arch-chroot /mnt pacman -Sy --noconfirm'
+      ],
     });
 
     for (const pkg of config.packages_aur ?? []) {
       const commands: string[] = [
-        `git clone --depth=1 "https://aur.archlinux.org/${pkg}.git" /tmp/build/${pkg}`,
-        `cd /tmp/build/${pkg} && makepkg -s --noconfirm && mv *.pkg.tar.zst /mnt/tmp/repo`,
+        `su - live -c "git clone --depth=1 https://aur.archlinux.org/${pkg}.git /tmp/build/${pkg}"`,
+        `su - live -c "cd /tmp/build/${pkg} && makepkg -s --noconfirm"`,
+        `sh -c "mv /tmp/build/${pkg}/*.pkg.tar.zst /mnt/root/repo"`,
         `rm -rf /tmp/build/${pkg}`,
       ];
       this.addTask({
@@ -169,7 +191,7 @@ export class InstallerService {
     }
     this.addTask({
       title: `Instalando pacotes AUR...`,
-      commands: [`arch-chroot /mnt pacman -U /tmp/repo/*.pkg.tar.zst --noconfirm`],
+      commands: [`arch-chroot /mnt sh -c "pacman --noconfirm -U /root/repo/* && rm -rf /root/repo"`],
     });
 
     this.addTask({
