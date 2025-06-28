@@ -61,28 +61,17 @@ watch(
 </script>
 
 <template>
-  <div
-    class="flex flex-col w-full max-w-1024px mx-auto pa-8 h-screen overflow-hidden"
-  >
+  <div class="flex flex-col w-full max-w-1024px mx-auto pa-8 h-screen overflow-hidden">
     <StepImage class="h-240px mx-auto mb-8" />
 
-    <p class="flex items-center gap-2 mb-2">
-      <ProgressSpinner
-        style="width: 24px; height: 24px"
-        strokeWidth="2"
-        fill="transparent"
-        animationDuration=".5s"
-        aria-label="Custom ProgressSpinner"
-      />
-      <span>{{ progress.toFixed(0) }}% {{ currentTask?.title }}</span>
-    </p>
+    <div class="flex items-center gap-2 mb-2">
+      <ProgressSpinner style="width: 24px; height: 24px" strokeWidth="2" fill="transparent" animationDuration=".5s"
+        aria-label="Custom ProgressSpinner" />
+      <p class="flex-1">{{ progress.toFixed(0) }}% {{ currentTask?.title }}</p>
+    </div>
     <ProgressBar class="mb-4" :value="progress">
       <span></span>
     </ProgressBar>
-    <pre
-      ref="log"
-      class="flex-1 min-h-80px overflow-auto bg-black color-white pa-4 text-3 rounded-md"
-      >{{ logs }}</pre
-    >
+    <pre ref="log" class="flex-1 min-h-80px overflow-auto bg-black color-white pa-4 text-3 rounded-md">{{ logs }}</pre>
   </div>
 </template>
