@@ -78,8 +78,16 @@ export class InstallerService {
 
   static createTasks(config: InstallConfig) {
     this.addTask({
-      title: "Atualizando o sistema...",
-      commands: [`pacman -Syu --noconfirm`],
+      title: "Escolhendo os melhores espelhos...",
+      commands:[`sudo reflector --country "Brazil" --protocol https --sort age --save /etc/pacman.d/mirrorlist`]
+    })
+    this.addTask({
+      title: "Inicializando chaveiro...",
+      commands: [`pacman-key --init`, `pacman-key --populate archlinux`]
+    })
+    this.addTask({
+      title: "Atualizando os repositórios...",
+      commands: [`pacman -Sy --noconfirm`],
     });
     {
       const commands: string[] = [
@@ -125,8 +133,6 @@ export class InstallerService {
         `timedatectl set-timezone America/Sao_Paulo`,
         `hwclock --systohc --utc`,
         `sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 8/' /etc/pacman.conf`,
-        `echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" >>/etc/pacman.conf`,
-        `reflector --country "Brazil" --protocol https --sort age --save /etc/pacman.d/mirrorlist`,
       ];
       this.addTask({
         title: `Preparando instalação...`,
@@ -135,15 +141,15 @@ export class InstallerService {
     }
 
     {
-      let packages = `base base-devel linux linux-firmware curl wget nano btrfs-progs networkmanager efibootmgr git sudo vim openssh openssl zsh gdm gnome-shell chrony gnome-initial-setup ${config.packages?.join(
+      let packages = `base base-devel linux linux-firmware curl wget nano btrfs-progs networkmanager efibootmgr git sudo vim openssh openssl zsh gdm gnome-shell cronie reflector gnome-initial-setup ${config.packages?.join(
         " "
       )}`;
       if (config.bootloader === "grub") {
         packages += ` grub efibootmgr os-prober`;
       }
       const commands: string[] = [
-        `pacstrap -K /mnt ${packages}`,
-        `genfstab -U /mnt >>/mnt/etc/fstab`,
+        `sudo pacstrap -K /mnt ${packages}`,
+        `sudo genfstab -U /mnt >>/mnt/etc/fstab`,
       ];
       if (config.hostname) {
         commands.push(`echo "${config.hostname}" >/mnt/etc/hostname`);
@@ -204,6 +210,8 @@ export class InstallerService {
         `arch-chroot /mnt systemctl enable NetworkManager`,
         `arch-chroot /mnt systemctl enable gdm`,
         `arch-chroot /mnt systemctl enable chronyd`,
+        `arch-chroot /mnt systemctl enable reflector.service`,
+        `arch-chroot /mnt systemctl enable reflector.timer`,
       ],
     });
     if (config.bootloader === "grub") {
