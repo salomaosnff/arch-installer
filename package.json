@@ -17,6 +17,7 @@
     "@tauri-apps/plugin-process": "~2.2.2",
     "@tauri-apps/plugin-shell": "~2.2.2",
     "@unocss/reset": "^66.2.3",
+    "@xterm/xterm": "^5.5.0",
     "lodash-es": "^4.17.21",
     "pinia": "^3.0.3",
     "primeicons": "^7.0.0",
