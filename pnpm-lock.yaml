@@ -29,9 +29,6 @@ importers:
       '@unocss/reset':
         specifier: ^66.2.3
         version: 66.2.3
-      '@xterm/xterm':
-        specifier: ^5.5.0
-        version: 5.5.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -667,9 +664,6 @@ packages:
 
   '@vue/shared@3.5.17':
     resolution: {integrity: sha512-CabR+UN630VnsJO/jHWYBC1YVXyMq94KKp6iF5MQgZJs5I8cmjw6oVMO1oDbtBkENSHSSn/UadWlW/OAgdmKrg==}
-
-  '@xterm/xterm@5.5.0':
-    resolution: {integrity: sha512-hqJHYaQb5OptNunnyAnkHyM8aCjZ1MEIDTQu1iIbbTD/xops91NB5yq1ZK/dC2JDbVWtF23zUtl9JE2NqwT87A==}
 
   acorn@8.15.0:
     resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
@@ -1641,8 +1635,6 @@ snapshots:
       vue: 3.5.17(typescript@5.6.3)
 
   '@vue/shared@3.5.17': {}
-
-  '@xterm/xterm@5.5.0': {}
 
   acorn@8.15.0: {}
 
