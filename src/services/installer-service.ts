@@ -25,7 +25,7 @@ export class InstallerService {
   static #currentTask = ref<Task>();
   static #channel = new Channel<any>((data) => {
     const line = data.StdOut || data.StdErr;
-    if(line){
+    if (line) {
       this.logs.value += line + "\n";
     }
   });
@@ -79,12 +79,14 @@ export class InstallerService {
   static createTasks(config: InstallConfig) {
     this.addTask({
       title: "Escolhendo os melhores espelhos...",
-      commands:[`sudo reflector --country "Brazil" --protocol https --sort age --save /etc/pacman.d/mirrorlist`]
-    })
+      commands: [
+        `sudo reflector --country "Brazil" --protocol https --sort age --save /etc/pacman.d/mirrorlist`,
+      ],
+    });
     this.addTask({
       title: "Inicializando chaveiro...",
-      commands: [`pacman-key --init`, `pacman-key --populate archlinux`]
-    })
+      commands: [`pacman-key --init`, `pacman-key --populate archlinux`],
+    });
     this.addTask({
       title: "Atualizando os repositórios...",
       commands: [`pacman -Sy --noconfirm`],
@@ -141,16 +143,59 @@ export class InstallerService {
     }
 
     {
-      let packages = `base base-devel linux linux-firmware curl wget nano btrfs-progs networkmanager efibootmgr git sudo vim openssh openssl zsh gdm gnome-shell cronie reflector gnome-initial-setup ${config.packages?.join(
-        " "
-      )}`;
+      let packages = [
+        "base",
+        "base-devel",
+        "linux",
+        "linux-firmware",
+        "curl",
+        "wget",
+        "nano",
+        "btrfs-progs",
+        "networkmanager",
+        "efibootmgr",
+        "git",
+        "sudo",
+        "vim",
+        "openssh",
+        "openssl",
+        "zsh",
+        "gdm",
+        "gnome-shell",
+        "cronie",
+        "reflector",
+        "gnome-initial-setup",
+        "gnome-backgrounds",
+        "gnome-console",
+        "gnome-control-center",
+        "gnome-disk-utility",
+        "gnome-menus",
+        "gnome-shell",
+        "gnome-text-editor",
+        "gnome-shell-extensions",
+        "gnome-software",
+        "gnome-browser-conector",
+        "gnome-calculator",
+        "gnome-characters",
+        "gnome-user-share",
+        "gnome-remote-desktop",
+        "gnome-mimeapps",
+        "gnome-system-monitor",
+        "gnome-tweaks",
+        "gnome-keyring",
+        "flatpak",
+        ...(config.packages ?? []),
+      ];
+
       if (config.bootloader === "grub") {
-        packages += ` grub efibootmgr os-prober`;
+        packages.push("grub", "efibootmgr", "os-prober");
       }
+
       const commands: string[] = [
-        `sudo pacstrap -K /mnt ${packages}`,
+        `sudo pacstrap -K /mnt ${packages.join(" ")}`,
         `sudo genfstab -U /mnt >>/mnt/etc/fstab`,
       ];
+
       if (config.hostname) {
         commands.push(`echo "${config.hostname}" >/mnt/etc/hostname`);
       }
