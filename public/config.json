@@ -32,6 +32,13 @@
     }
   ],
   "additional_packages": [
+     {
+      "title": "yay",
+      "source": "AUR",
+      "package": "yay",
+      "logo": "https://linux-packages.com/icon/arch_linux.png",
+      "description": "Yay is an AUR helper written in Go, designed to make it easier to install and manage packages from the Arch User Repository (AUR)."
+    },
     {
       "title": "Visual Studio Code",
       "source": "AUR",
@@ -47,8 +54,36 @@
       "description": "Brave is a free and open-source web browser developed by Brave Software, Inc. It is based on the Chromium web browser and focuses on privacy and speed."
     },
     {
-      "title": "Discord",
+      "title": "Firefox",
+      "source": "repo",
+      "package": "firefox",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg",
+      "description": "Firefox is a free and open-source web browser developed by the Mozilla Foundation. It is designed for speed, privacy, and user control."
+    },
+    {
+      "title": "Google Chrome",
       "source": "AUR",
+      "package": "google-chrome",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/1024px-Google_Chrome_icon_%28February_2022%29.svg.png",
+      "description": "Google Chrome is a cross-platform web browser developed by Google. It is designed to be fast, simple, and secure, with a minimalistic user interface."
+    },
+    {
+      "title": "Opera",
+      "source": "AUR",
+      "package": "opera",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/512px-Opera_2015_icon.svg.png?20210325220019",
+      "description": "Opera is a web browser developed by Opera Software. It is known for its speed, security features, and innovative user interface."
+    },
+     {
+      "title": "Vivaldi",
+      "source": "AUR",
+      "package": "vivaldi",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Vivaldi_web_browser_logo.svg/1026px-Vivaldi_web_browser_logo.svg.png",
+      "description": "Vivaldi is a free and open-source web browser developed by Vivaldi Technologies. It is designed for power users and offers extensive customization options, built-in tools, and a focus on user privacy."
+    },
+    {
+      "title": "Discord",
+      "source": "repo",
       "package": "discord",
       "logo": "https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e3d80db9971f10a9757c99_Symbol.svg",
       "description": "Discord is a VoIP, instant messaging and digital distribution platform designed for creating communities."
@@ -59,6 +94,48 @@
       "package": "steam",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/1200px-Steam_icon_logo.svg.png",
       "description": "Steam is a digital distribution platform developed by Valve Corporation for purchasing and playing video games."
+    },
+    {
+      "title": "Libre Office",
+      "source": "repo",
+      "package": "libreoffice-still",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/48/LibreOffice_7.5_Main_Icon.svg",
+      "description": "LibreOffice is a free and open-source office suite, developed by The Document Foundation, that includes applications for word processing, spreadsheets, presentations, and more."
+    },
+    {
+      "title": "WPS Office",
+      "source": "AUR",
+      "package": "wps-office",
+      "logo": "https://i.vimeocdn.com/portrait/107078835_640x640?subrect=60%2C60%2C447%2C447&r=cover&sig=e3a2688c1db88fc9064cb8481429f6ebf60cd6b0cb14c296517e84b0cc97df4e&v=1&region=us",
+      "description": "WPS Office is a free and cross-platform office suite developed by Kingsoft, which includes a word processor, spreadsheet, and presentation software."
+    },
+    {
+      "title": "Inkscape",
+      "source": "repo",
+      "package": "inkscape",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Inkscape_logo_2.svg/1024px-Inkscape_logo_2.svg.png",
+      "description": "Inkscape is a free and open-source vector graphics editor used for creating and editing vector images, including illustrations, diagrams, and complex paintings."
+    },
+    {
+      "title": "GIMP",
+      "source": "repo",
+      "package": "gimp",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/The_GIMP_icon_-_gnome.svg/1200px-The_GIMP_icon_-_gnome.svg.png",
+      "description": "GIMP (GNU Image Manipulation Program) is a free and open-source raster graphics editor used for tasks such as photo retouching, image editing, and image composition."
+    },
+    {
+      "title": "VLC",
+      "source": "repo",
+      "package": "vlc",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/e/e6/VLC_Icon.svg",
+      "description": "VLC media player is a free and open-source, cross-platform media player and streaming media server developed by the VideoLAN project. It supports most multimedia files, as well as DVDs, audio CDs, VCDs, and various streaming protocols."
+    },
+    {
+      "title": "Reaper",
+      "source": "repo",
+      "package": "reaper",
+      "logo": "https://ih1.redbubble.net/image.2039916880.8609/raf,360x360,075,t,fafafa:ca443f4786.jpg",
+      "description": "Reaper is a digital audio workstation (DAW) software application for Microsoft Windows, macOS, and Linux. It is used for recording, editing, mixing, and processing audio and MIDI."
     }
   ]
 }
