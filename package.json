@@ -8,7 +8,8 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "tauri:build": "tauri build --no-bundle"
+    "tauri:build": "tauri build --no-bundle",
+    "serve": "pnpm tauri:build && vite preview --host --port 8000 -d --outDir=src-tauri/target/release"
   },
   "dependencies": {
     "@primeuix/themes": "^1.1.2",

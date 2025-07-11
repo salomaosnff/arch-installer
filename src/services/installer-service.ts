@@ -24,9 +24,11 @@ export class InstallerService {
   static #totalRunned = ref(0);
   static #currentTask = ref<Task>();
   static #channel = new Channel<any>((data) => {
-    const line = data.StdOut || data.StdErr;
-    if (line) {
-      this.logs.value += line + "\n";
+    if (data.StdOut) {
+      this.logs.value += data.StdOut + "\n";
+    }
+    if (data.StdErr) {
+      this.logs.value += data.StdErr + "\n";
     }
   });
   static logs = ref<string>("");
@@ -58,10 +60,16 @@ export class InstallerService {
   }
 
   static async #execute(command: string) {
-    await invoke("exec_sh", {
+    this.logs.value += `\n> ${command}\n`;
+    const exitCode = await invoke("exec_sh", {
       command: command,
       channel: this.#channel,
     });
+
+    if (exitCode !== 0) {
+      this.logs.value += `\nErro: o comando falhou com o código de saída (${exitCode})\n`;
+      throw new Error(`Command failed: ${command} (exit code: ${exitCode})`);
+    }
   }
 
   static get totalCommands() {
@@ -93,10 +101,10 @@ export class InstallerService {
     });
     {
       const commands: string[] = [
-        `umount -f ${config.device}`,
-        `umount -f ${config.device}1`,
-        `umount -f ${config.device}2`,
-        `umount -f -R /mnt`,
+        `umount -f ${config.device} || true`,
+        `umount -f ${config.device}1 || true`,
+        `umount -f ${config.device}2 || true`,
+        `umount -f -R /mnt || true`,
       ];
       if (config.type === "install") {
         commands.push(
@@ -130,7 +138,7 @@ export class InstallerService {
       const commands: string[] = [
         `sed -i 's/^#${config.locale} UTF-8/${config.locale} UTF-8/' /etc/locale.gen`,
         `locale-gen`,
-        `echo "LANG=${config.locale}" >/etc/locale.conf`,
+        `echo "LANG=${config.locale}" > /etc/locale.conf`,
         `export LANG="${config.locale}"`,
         `timedatectl set-timezone America/Sao_Paulo`,
         `hwclock --systohc --utc`,
@@ -160,10 +168,10 @@ export class InstallerService {
         "openssh",
         "openssl",
         "zsh",
-        "gdm",
-        "gnome-shell",
         "cronie",
         "reflector",
+        "gdm",
+        "gnome-shell",
         "gnome-initial-setup",
         "gnome-backgrounds",
         "gnome-console",
@@ -174,7 +182,7 @@ export class InstallerService {
         "gnome-text-editor",
         "gnome-shell-extensions",
         "gnome-software",
-        "gnome-browser-conector",
+        "gnome-browser-connector",
         "gnome-calculator",
         "gnome-characters",
         "gnome-user-share",
@@ -224,39 +232,43 @@ export class InstallerService {
     this.addTask({
       title: `Preparando ambiente AUR...`,
       commands: [
-        `su - live -c "mkdir -p /tmp/build"`,
-        `mkdir -p /mnt/root/repo`,
+        `arch-chroot /mnt sh -c "useradd -m -s /bin/zsh aur && passwd -d aur && echo 'aur ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"`,
         "arch-chroot /mnt pacman -Sy --noconfirm",
       ],
     });
 
     for (const pkg of config.packages_aur ?? []) {
       const commands: string[] = [
-        `su - live -c "git clone --depth=1 https://aur.archlinux.org/${pkg}.git /tmp/build/${pkg}"`,
-        `su - live -c "cd /tmp/build/${pkg} && makepkg -s --noconfirm"`,
-        `sh -c "mv /tmp/build/${pkg}/*.pkg.tar.zst /mnt/root/repo"`,
-        `rm -rf /tmp/build/${pkg}`,
+        `arch-chroot /mnt sh -c "su - aur -c 'git clone --depth=1 https://aur.archlinux.org/${pkg}.git ~/${pkg}'"`,
+        `arch-chroot /mnt sh -c "su - aur -c 'cd ~/${pkg} && makepkg -s --noconfirm'"`,
+        `arch-chroot /mnt sh -c "su - aur -c 'mv ~/${pkg}/*.pkg.tar.zst ~/'"`,
+        `arch-chroot /mnt sh -c "su - aur -c 'rm -rf ~/${pkg}'"`,
       ];
       this.addTask({
         title: `Compilando pacote AUR (${pkg})...`,
         commands,
       });
     }
-    this.addTask({
-      title: `Instalando pacotes AUR...`,
-      commands: [
-        `arch-chroot /mnt sh -c "pacman --noconfirm -U /root/repo/* && rm -rf /root/repo"`,
-      ],
-    });
+
+    if (config.packages_aur?.length) {
+      this.addTask({
+        title: `Instalando pacotes AUR...`,
+        commands: [
+          `arch-chroot /mnt sh -c "pacman --noconfirm -U /home/aur/*.pkg.tar.zst"`,
+          `arch-chroot /mnt sh -c "userdel -r aur"`,
+          `arch-chroot /mnt sh -c "sed -i '/^aur ALL=(ALL) NOPASSWD: ALL$/d' /etc/sudoers"`
+        ],
+      });
+    }
 
     this.addTask({
       title: `Habilitando serviços...`,
       commands: [
-        `arch-chroot /mnt systemctl enable NetworkManager`,
-        `arch-chroot /mnt systemctl enable gdm`,
-        `arch-chroot /mnt systemctl enable chronyd`,
-        `arch-chroot /mnt systemctl enable reflector.service`,
-        `arch-chroot /mnt systemctl enable reflector.timer`,
+        `arch-chroot /mnt systemctl enable NetworkManager || true`,
+        `arch-chroot /mnt systemctl enable gdm || true`,
+        `arch-chroot /mnt systemctl enable chronyd || true`,
+        `arch-chroot /mnt systemctl enable reflector.service || true`,
+        `arch-chroot /mnt systemctl enable reflector.timer || true`,
       ],
     });
     if (config.bootloader === "grub") {
@@ -282,14 +294,9 @@ initrd /initramfs-linux.img
 options root=PARTUUID=$PARTUUID rw rootflags=subvol=@,compress=zstd,noatime,ssd,discard=async,space_cache=v2,x-gvfs-show,x-gvfs-name=${encodeURIComponent(
             config.distro_name
           )}
-EOF`,
+EOF || true`,
         ],
       });
     }
-
-    this.addTask({
-      title: `Finalizando...)`,
-      commands: ["umount -R /mnt", "sync"],
-    });
   }
 }

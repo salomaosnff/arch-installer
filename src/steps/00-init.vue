@@ -10,14 +10,21 @@ const currentWindow = getCurrentWindow();
 execCommand('id -u')
     .then(({ stdout }) => {
         if (import.meta.env.PROD && stdout.trim() !== "0") {
-            alert(`Esta aplicação deve ser executada como root. Por favor, reinicie o instalador com privilégios de administrador.`);
-            currentWindow.close();
+            return router.replace({
+                path: "/error",
+                query: {
+                    title: "Erro de Permissão",
+                    message: "Esta aplicação deve ser executada como root. Por favor, reinicie o instalador com privilégios de administrador.",
+                }
+            });
         }
-    }).then(() => {
+
         if (currentWindow.label === 'main') {
-            router.replace("/language");
-        } else if (currentWindow.label === 'install') {
-            router.replace("/install")
+            return router.replace("/language");
+        }
+
+        if (currentWindow.label === 'install') {
+            return router.replace("/install")
         }
     })
 

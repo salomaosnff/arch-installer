@@ -32,7 +32,7 @@
     }
   ],
   "additional_packages": [
-     {
+    {
       "title": "yay",
       "source": "AUR",
       "package": "yay",
@@ -74,7 +74,7 @@
       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/512px-Opera_2015_icon.svg.png?20210325220019",
       "description": "Opera is a web browser developed by Opera Software. It is known for its speed, security features, and innovative user interface."
     },
-     {
+    {
       "title": "Vivaldi",
       "source": "AUR",
       "package": "vivaldi",

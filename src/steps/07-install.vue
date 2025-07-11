@@ -6,12 +6,14 @@ import ProgressSpinner from "primevue/progressspinner";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-import { computed, useTemplateRef, watch } from "vue";
+import { computed, onBeforeUnmount, useTemplateRef, watch } from "vue";
 import { InstallerService } from "../services/installer-service";
 import { isInstalling, useInstallerStore } from "../stores/installer";
+
 const installerStore = useInstallerStore();
 
 isInstalling.value = true;
+
 const { packages, packages_aur } = installerStore.additionalPackages.reduce(
   (acc, pkg) => {
     if (pkg.source === "AUR") {
@@ -33,7 +35,18 @@ InstallerService.createTasks({
   packages: packages,
   packages_aur: packages_aur,
 });
-InstallerService.runAll().then(() => router.push("/finish"));
+InstallerService.runAll().then(() => router.push("/finish")).catch((err) => {
+  console.error(err);
+  return router.replace({
+    name: "error",
+    query: {
+      title: "Falha na Instalação",
+      message: "Ocorreu um erro durante a instalação. Por favor, verifique os logs para mais detalhes.",
+      code: "E002",
+      logs: 1,
+    },
+  })
+});
 
 const { totalCommands, totalRunned, currentTask, logs } = InstallerService;
 
@@ -58,6 +71,10 @@ watch(
     flush: "post",
   }
 );
+
+onBeforeUnmount(() => {
+  isInstalling.value = false;
+});
 </script>
 
 <template>

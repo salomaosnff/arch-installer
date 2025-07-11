@@ -8,6 +8,7 @@ import Packages from "./steps/05-packages.vue";
 import Review from "./steps/06-review.vue";
 import Install from "./steps/07-install.vue";
 import Finish from "./steps/08-finish.vue";
+import ErrorPage from "./steps/00-error.vue";
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -48,5 +49,24 @@ export const router = createRouter({
       path: "/finish",
       component: Finish,
     },
+    {
+      path: "/error",
+      name: "error",
+      component: ErrorPage
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      redirect: "/error",
+      beforeEnter: (_to, _from, next) => {
+        next({
+          name: "error",
+          query: {
+            title: "Página Não Encontrada",
+            message: "A página que você está tentando acessar não existe.",
+            code: "404"
+          }
+        });
+      }
+    }
   ],
 });
