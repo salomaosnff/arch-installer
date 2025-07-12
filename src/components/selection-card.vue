@@ -39,7 +39,7 @@ const isMultiple = computed(() => Array.isArray(model.value));
       :disabled="disabled"
     />
 
-    <div class="flex-1">
+    <div class="flex-1 overflow-hidden">
       <slot />
     </div>
   </label>

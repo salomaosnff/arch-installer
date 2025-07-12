@@ -37,105 +37,189 @@
       "source": "AUR",
       "package": "yay",
       "logo": "https://linux-packages.com/icon/arch_linux.png",
-      "description": "Yay is an AUR helper written in Go, designed to make it easier to install and manage packages from the Arch User Repository (AUR)."
+      "description": "Gerenciador de Pacotes AUR"
     },
     {
       "title": "Visual Studio Code",
       "source": "AUR",
       "package": "visual-studio-code-bin",
       "logo": "https://code.visualstudio.com/assets/images/code-stable.png",
-      "description": "A powerful code editor redefined and optimized for building and debugging modern web and cloud applications."
+      "description": "Edição de código. Redefinida."
     },
     {
-      "title": "Brave Browser",
-      "source": "AUR",
-      "package": "brave-bin",
-      "logo": "https://brave.com/static-assets/images/brave-logo-sans-text.svg",
-      "description": "Brave is a free and open-source web browser developed by Brave Software, Inc. It is based on the Chromium web browser and focuses on privacy and speed."
-    },
-    {
-      "title": "Firefox",
-      "source": "repo",
-      "package": "firefox",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg",
-      "description": "Firefox is a free and open-source web browser developed by the Mozilla Foundation. It is designed for speed, privacy, and user control."
-    },
-    {
-      "title": "Google Chrome",
-      "source": "AUR",
-      "package": "google-chrome",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/1024px-Google_Chrome_icon_%28February_2022%29.svg.png",
-      "description": "Google Chrome is a cross-platform web browser developed by Google. It is designed to be fast, simple, and secure, with a minimalistic user interface."
-    },
-    {
-      "title": "Opera",
-      "source": "AUR",
-      "package": "opera",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/512px-Opera_2015_icon.svg.png?20210325220019",
-      "description": "Opera is a web browser developed by Opera Software. It is known for its speed, security features, and innovative user interface."
-    },
-    {
-      "title": "Vivaldi",
-      "source": "AUR",
-      "package": "vivaldi",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Vivaldi_web_browser_logo.svg/1026px-Vivaldi_web_browser_logo.svg.png",
-      "description": "Vivaldi is a free and open-source web browser developed by Vivaldi Technologies. It is designed for power users and offers extensive customization options, built-in tools, and a focus on user privacy."
-    },
-    {
-      "title": "Discord",
-      "source": "repo",
-      "package": "discord",
-      "logo": "https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e3d80db9971f10a9757c99_Symbol.svg",
-      "description": "Discord is a VoIP, instant messaging and digital distribution platform designed for creating communities."
-    },
-    {
-      "title": "Steam",
-      "source": "repo",
-      "package": "steam",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/1200px-Steam_icon_logo.svg.png",
-      "description": "Steam is a digital distribution platform developed by Valve Corporation for purchasing and playing video games."
-    },
-    {
-      "title": "Libre Office",
+      "title": "LibreOffice",
       "source": "repo",
       "package": "libreoffice-still",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/4/48/LibreOffice_7.5_Main_Icon.svg",
-      "description": "LibreOffice is a free and open-source office suite, developed by The Document Foundation, that includes applications for word processing, spreadsheets, presentations, and more."
-    },
-    {
-      "title": "WPS Office",
-      "source": "AUR",
-      "package": "wps-office",
-      "logo": "https://i.vimeocdn.com/portrait/107078835_640x640?subrect=60%2C60%2C447%2C447&r=cover&sig=e3a2688c1db88fc9064cb8481429f6ebf60cd6b0cb14c296517e84b0cc97df4e&v=1&region=us",
-      "description": "WPS Office is a free and cross-platform office suite developed by Kingsoft, which includes a word processor, spreadsheet, and presentation software."
+      "description": "O LibreOffice é uma suíte de produtividade."
     },
     {
       "title": "Inkscape",
       "source": "repo",
       "package": "inkscape",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Inkscape_logo_2.svg/1024px-Inkscape_logo_2.svg.png",
-      "description": "Inkscape is a free and open-source vector graphics editor used for creating and editing vector images, including illustrations, diagrams, and complex paintings."
-    },
-    {
-      "title": "GIMP",
-      "source": "repo",
-      "package": "gimp",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/The_GIMP_icon_-_gnome.svg/1200px-The_GIMP_icon_-_gnome.svg.png",
-      "description": "GIMP (GNU Image Manipulation Program) is a free and open-source raster graphics editor used for tasks such as photo retouching, image editing, and image composition."
-    },
-    {
-      "title": "VLC",
-      "source": "repo",
-      "package": "vlc",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/e/e6/VLC_Icon.svg",
-      "description": "VLC media player is a free and open-source, cross-platform media player and streaming media server developed by the VideoLAN project. It supports most multimedia files, as well as DVDs, audio CDs, VCDs, and various streaming protocols."
+      "description": "Editor de Imagens Vetoriais"
     },
     {
       "title": "Reaper",
       "source": "repo",
       "package": "reaper",
       "logo": "https://ih1.redbubble.net/image.2039916880.8609/raf,360x360,075,t,fafafa:ca443f4786.jpg",
-      "description": "Reaper is a digital audio workstation (DAW) software application for Microsoft Windows, macOS, and Linux. It is used for recording, editing, mixing, and processing audio and MIDI."
+      "description": "Estação de Trabalho de Áudio Digital."
+    },
+    {
+      "title": "Recursos",
+      "source": "flatpak",
+      "package": "net.nokyan.Resources",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fnet%2Fnokyan%2FResources%2F1e4b9ed2ae23a3ba094ab8e165b5a10d%2Ficons%2F128x128%2Fnet.nokyan.Resources.png&w=128&q=100",
+      "description": "Monitore os recursos do sistema"
+    },
+    {
+      "title": "OBS Studio",
+      "source": "flatpak",
+      "package": "com.obsproject.Studio",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fobsproject%2FStudio%2F09bce0a29065cf9c586406eb6f01d8f7%2Ficons%2F128x128%2Fcom.obsproject.Studio.png&w=128&q=100",
+      "description": "Transmita ao vivo e grave vídeos."
+    },
+    {
+      "title": "Blender",
+      "source": "flatpak",
+      "package": "org.blender.Blender",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Forg%2Fblender%2FBlender%2F8e6d24fde835244cda7947a418e6790e%2Ficons%2F128x128%2Forg.blender.Blender.png&w=128&q=100",
+      "description": "Modele, anime, faça rigging e muito mais em 3D."
+    },
+    {
+      "title": "draw.io",
+      "source": "flatpak",
+      "package": "com.jgraph.drawio.desktop",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fjgraph%2Fdrawio.desktop%2F206ba9e28a0c7b80b9b8b8505623124c%2Ficons%2F128x128%2Fcom.jgraph.drawio.desktop.png&w=128&q=100",
+      "description":"Crie e compartilhe diagramas."
+    },
+    {
+      "title": "Firefox",
+      "source": "flatpak",
+      "package": "org.mozilla.firefox",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Frepo%2Fappstream%2Fx86_64%2Ficons%2F128x128%2Forg.mozilla.firefox.png&w=128&q=100",
+      "description": "Navegador web rápido, privado e seguro."
+    },
+    {
+      "title": "Google Chrome",
+      "source": "flatpak",
+      "package": "com.google.Chrome",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fgoogle%2FChrome%2Fb9a5d3e133054c2ab50025a3b306a1a8%2Ficons%2F128x128%2Fcom.google.Chrome.png&w=128&q=100",
+      "description":"Google Chrome é um navegador de internet desenvolvido pela Google."
+    },
+    {
+      "title": "Discord",
+      "source": "flatpak",
+      "package": "com.discordapp.Discord",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fdiscordapp%2FDiscord%2Ff9f860f3f886806f5b2e2b36ad487aff%2Ficons%2F128x128%2Fcom.discordapp.Discord.png&w=128&q=100",
+      "description":"Discord é uma plataforma de comunicação por voz, vídeo e texto."
+    },
+    {
+      "title": "Brave",
+      "source": "flatpak",
+      "package": "com.brave.Browser",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fbrave%2FBrowser%2F1fe041b28eca516844ef52c084020f05%2Ficons%2F128x128%2Fcom.brave.Browser.png&w=128&q=100",
+      "description":"Brave é um navegador de internet focado em privacidade e velocidade."
+    },
+    {
+      "title": "Bottles",
+      "source": "flatpak",
+      "package": "com.usebottles.bottles",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fusebottles%2Fbottles%2F2abe656cf3a3b4c2a69b5e695748a600%2Ficons%2F128x128%2Fcom.usebottles.bottles.png&w=128&q=100",
+      "description": "Execute softwares do Windows."
+    },
+    {
+      "title": "Steam",
+      "source": "flatpak",
+      "package": "com.valvesoftware.Steam",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fvalvesoftware%2FSteam%2Fe76daf377af684b5ea338ad98062ec60%2Ficons%2F128x128%2Fcom.valvesoftware.Steam.png&w=128&q=100",
+      "description":"Jogue jogos populares e os últimos lançamentos."
+    },
+    {
+      "title": "Spotify",
+      "source": "flatpak",
+      "package": "com.spotify.Client",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fspotify%2FClient%2Fd3da7d038cce63f69bb1c0961c63f3e2%2Ficons%2F128x128%2Fcom.spotify.Client.png&w=128&q=100",
+      "description": "Serviço de streaming de música online."
+    },
+    {
+      "title": "Telegram",
+      "source": "flatpak",
+      "package": "org.telegram.desktop",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Forg%2Ftelegram%2Fdesktop%2F385865a46985be3d2537579a4567c5a9%2Ficons%2F128x128%2Forg.telegram.desktop.png&w=128&q=100",
+      "description": "Nova era da comunicação por mensagens."
+    },
+    {
+      "title": "VLC",
+      "source": "flatpak",
+      "package": "org.videolan.VLC",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Forg%2Fvideolan%2FVLC%2F7bbc1978ff44590e9fd3f3f1a112c620%2Ficons%2F128x128%2Forg.videolan.VLC.png&w=128&q=100",
+      "description": "VLC media player, o reprodutor multimídia de código aberto."
+    },
+    {
+      "title": "Flatseal",
+      "source": "flatpak",
+      "package": "com.github.tchx84.Flatseal",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fgithub%2Ftchx84.Flatseal%2F44961b807bc00a501955562d27bfe81e%2Ficons%2F128x128%2Fcom.github.tchx84.Flatseal.png&w=128&q=100",
+      "description":"Um gerenciador de permissões para Flatpak."
+    },
+    {
+      "title": "GIMP",
+      "source": "flatpak",
+      "package": "org.gimp.GIMP",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Forg%2Fgimp%2FGIMP%2F72057b7f5bf93195595d0ac478e4b683%2Ficons%2F128x128%2Forg.gimp.GIMP.png&w=128&q=100",
+      "description":"Crie e edite imagens ou fotografias."
+    },
+    {
+      "title": "Chromium Navegador Web",
+      "source": "flatpak",
+      "package": "org.chromium.Chromium",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Forg%2Fchromium%2FChromium%2Fc0858418d032ffb1e60cec0c7fe315ff%2Ficons%2F128x128%2Forg.chromium.Chromium.png&w=128&q=100",
+      "description": "O navegador web do projeto Chromium."
+    },
+    {
+      "title": "Thunderbird",
+      "source": "flatpak",
+      "package": "org.mozilla.Thunderbird",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Frepo%2Fappstream%2Fx86_64%2Ficons%2F128x128%2Forg.mozilla.Thunderbird.png&w=128&q=100",
+      "description": "Thunderbird é um cliente gratuito e de código aberto para e-mails, feeds de notícias, chat e calendário."
+    },
+    {
+      "title": "Vivaldi",
+      "source": "flatpak",
+      "package": "com.vivaldi.Vivaldi",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fvivaldi%2FVivaldi%2F49e88029964706f8be5af753dfd16aef%2Ficons%2F128x128%2Fcom.vivaldi.Vivaldi.png&w=128&q=100",
+      "description": "Navegador web repleto de recursos."
+    },
+    {
+      "title": "Opera",
+      "source": "flatpak",
+      "package": "com.opera.Opera",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fopera%2FOpera%2F39e19a1dd4454c56a5a00f9fc0eb5872%2Ficons%2F128x128%2Fcom.opera.Opera.png&w=128&q=100",
+      "description": "Seu navegador pessoal."
+    },
+    {
+      "title": "Postman",
+      "source": "flatpak",
+      "package": "com.getpostman.Postman",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fgetpostman%2FPostman%2Fd5793b6f0128f64f6aa955c943bc3fc5%2Ficons%2F128x128%2Fcom.getpostman.Postman.png&w=128&q=100",
+      "description": "Plataforma para construir e usar APIs."
+    },
+    {
+      "title": "DBeaver Community",
+      "source": "flatpak",
+      "package": "io.dbeaver.DBeaverCommunity",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fio%2Fdbeaver%2FDBeaverCommunity%2Fab82750258fc41bfda0f52aba0840e70%2Ficons%2F128x128%2Fio.dbeaver.DBeaverCommunity.png&w=128&q=100",
+      "description": "Ferramenta universal gratuita para bancos de dados."
+    },
+    {
+      "title": "WPS Office",
+      "source": "flatpak",
+      "package": "com.wps.Office",
+      "logo": "https://flathub.org/_next/image?url=https%3A%2F%2Fdl.flathub.org%2Fmedia%2Fcom%2Fwps%2FOffice%2Fae5023e79150a9fa7fac731a582d9a78%2Ficons%2F128x128%2Fcom.wps.Office.png&w=128&q=100",
+      "description":"WPS Office é uma suíte de escritório completa."
     }
   ]
 }

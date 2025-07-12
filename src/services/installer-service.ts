@@ -16,6 +16,7 @@ export interface InstallConfig {
   hostname?: string;
   packages?: string[];
   packages_aur?: string[];
+  packages_flatpak?: string[];
 }
 
 export class InstallerService {
@@ -228,35 +229,42 @@ export class InstallerService {
       title: `Configurando sudo...`,
       commands: [`echo "%sudo ALL=(ALL) NOPASSWD: ALL" >>/mnt/etc/sudoers`],
     });
-
-    this.addTask({
-      title: `Preparando ambiente AUR...`,
-      commands: [
-        `arch-chroot /mnt sh -c "useradd -m -s /bin/zsh aur && passwd -d aur && echo 'aur ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"`,
-        "arch-chroot /mnt pacman -Sy --noconfirm",
-      ],
-    });
-
-    for (const pkg of config.packages_aur ?? []) {
-      const commands: string[] = [
-        `arch-chroot /mnt sh -c "su - aur -c 'git clone --depth=1 https://aur.archlinux.org/${pkg}.git ~/${pkg}'"`,
-        `arch-chroot /mnt sh -c "su - aur -c 'cd ~/${pkg} && makepkg -s --noconfirm'"`,
-        `arch-chroot /mnt sh -c "su - aur -c 'mv ~/${pkg}/*.pkg.tar.zst ~/'"`,
-        `arch-chroot /mnt sh -c "su - aur -c 'rm -rf ~/${pkg}'"`,
-      ];
-      this.addTask({
-        title: `Compilando pacote AUR (${pkg})...`,
-        commands,
-      });
-    }
-
     if (config.packages_aur?.length) {
+      this.addTask({
+        title: `Preparando ambiente AUR...`,
+        commands: [
+          `arch-chroot /mnt sh -c "useradd -m -s /bin/zsh aur && passwd -d aur && echo 'aur ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"`,
+          "arch-chroot /mnt pacman -Sy --noconfirm",
+        ],
+      });
+      for (const pkg of config.packages_aur ?? []) {
+        const commands: string[] = [
+          `arch-chroot /mnt sh -c "su - aur -c 'git clone --depth=1 https://aur.archlinux.org/${pkg}.git ~/${pkg}'"`,
+          `arch-chroot /mnt sh -c "su - aur -c 'cd ~/${pkg} && makepkg -s --noconfirm'"`,
+          `arch-chroot /mnt sh -c "su - aur -c 'mv ~/${pkg}/*.pkg.tar.zst ~/'"`,
+          `arch-chroot /mnt sh -c "su - aur -c 'rm -rf ~/${pkg}'"`,
+        ];
+        this.addTask({
+          title: `Compilando pacote AUR (${pkg})...`,
+          commands,
+        });
+      }
       this.addTask({
         title: `Instalando pacotes AUR...`,
         commands: [
           `arch-chroot /mnt sh -c "pacman --noconfirm -U /home/aur/*.pkg.tar.zst"`,
           `arch-chroot /mnt sh -c "userdel -r aur"`,
-          `arch-chroot /mnt sh -c "sed -i '/^aur ALL=(ALL) NOPASSWD: ALL$/d' /etc/sudoers"`
+          `arch-chroot /mnt sh -c "sed -i '/^aur ALL=(ALL) NOPASSWD: ALL$/d' /etc/sudoers"`,
+        ],
+      });
+    }
+
+    if (config.packages_flatpak?.length) {
+      this.addTask({
+        title: `Instalando pacotes Flatpak...`,
+        commands: [
+          `arch-chroot /mnt sh -c "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"`,
+          `arch-chroot /mnt sh -c "flatpak install -y flathub ${config.packages_flatpak.join(" ")}"`,
         ],
       });
     }
