@@ -94,8 +94,28 @@ export class InstallerService {
     });
     this.addTask({
       title: "Inicializando chaveiro...",
-      commands: [`pacman-key --init`, `pacman-key --populate archlinux`],
+      commands: [
+        `pacman-key --init`,
+        `pacman-key --populate archlinux`,
+      ],
     });
+    
+    this.addTask({
+      title: 'Adicionando chaves de assinatura do Orion',
+      commands: [
+        `pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com`,
+`        pacman-key --lsign-key 3056513887B78AEB`
+      ]
+    })
+    
+    this.addTask({
+      title: 'Adicionando chaves de assinatura do Chaotic AUR',
+      commands: [
+        `pacman-key --recv-key 75093C925C10C833109F4445C7C3766AE5979ABC --keyserver keyserver.ubuntu.com`,
+`        pacman-key --lsign-key 75093C925C10C833109F4445C7C3766AE5979ABC`
+      ]
+    })
+
     this.addTask({
       title: "Atualizando os repositórios...",
       commands: [`pacman -Sy --noconfirm`],
@@ -171,15 +191,13 @@ export class InstallerService {
         "zsh",
         "cronie",
         "reflector",
-        "gdm",
-        "gnome-shell",
+        "orion-desktop-gnome",
         "gnome-initial-setup",
         "gnome-backgrounds",
         "gnome-console",
         "gnome-control-center",
         "gnome-disk-utility",
         "gnome-menus",
-        "gnome-shell",
         "gnome-text-editor",
         "gnome-shell-extensions",
         "gnome-software",
@@ -227,7 +245,10 @@ export class InstallerService {
 
     this.addTask({
       title: `Configurando sudo...`,
-      commands: [`echo "%sudo ALL=(ALL) NOPASSWD: ALL" >>/mnt/etc/sudoers`],
+      commands: [
+        `groupadd sudo || true`,
+        `echo "%sudo ALL=(ALL) NOPASSWD: ALL" >>/mnt/etc/sudoers`
+      ],
     });
     if (config.packages_aur?.length) {
       this.addTask({
