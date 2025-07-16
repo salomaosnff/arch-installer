@@ -101,7 +101,7 @@ export class InstallerService {
     });
     
     this.addTask({
-      title: 'Adicionando chaves de assinatura do Orion',
+      title: 'Adicionando chaves de assinatura do Chaotic AUR',
       commands: [
         `pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com`,
 `        pacman-key --lsign-key 3056513887B78AEB`
@@ -109,7 +109,7 @@ export class InstallerService {
     })
     
     this.addTask({
-      title: 'Adicionando chaves de assinatura do Chaotic AUR',
+      title: 'Adicionando chaves de assinatura do Orion',
       commands: [
         `pacman-key --recv-key 75093C925C10C833109F4445C7C3766AE5979ABC --keyserver keyserver.ubuntu.com`,
 `        pacman-key --lsign-key 75093C925C10C833109F4445C7C3766AE5979ABC`
