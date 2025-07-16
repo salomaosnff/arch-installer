@@ -14,17 +14,21 @@ const installerStore = useInstallerStore();
 
 isInstalling.value = true;
 
-const { packages, packages_aur } = installerStore.additionalPackages.reduce(
+const { packages, packages_aur, packages_flatpak } = installerStore.additionalPackages.reduce(
   (acc, pkg) => {
     if (pkg.source === "AUR") {
       acc.packages_aur.push(pkg.package);
-    } else {
+      
+    }else if(pkg.source === "flatpak"){
+      acc.packages_flatpak.push(pkg.package)
+    } 
+    else {
       acc.packages.push(pkg.package);
     }
 
     return acc;
   },
-  { packages: [] as string[], packages_aur: [] as string[] }
+  { packages: [] as string[], packages_aur: [] as string[], packages_flatpak: [] as string[] }
 );
 InstallerService.createTasks({
   device: installerStore.installDisk,
@@ -34,6 +38,8 @@ InstallerService.createTasks({
   type: installerStore.installType as any,
   packages: packages,
   packages_aur: packages_aur,
+  packages_flatpak: packages_flatpak,
+
 });
 InstallerService.runAll().then(() => router.push("/finish")).catch((err) => {
   console.error(err);
