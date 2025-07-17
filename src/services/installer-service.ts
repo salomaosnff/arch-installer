@@ -228,9 +228,12 @@ export class InstallerService {
       }
 
       commands.push(
-        `echo "KEYMAP=br-abnt2" >/mnt/etc/vconsole.conf`,
+        `cp /etc/vconsole.conf /mnt/etc/vconsole.conf`,
         `cp /etc/locale.conf /mnt/etc/locale.conf`,
-        `cp /etc/locale.gen /mnt/etc/locale.gen`
+        `cp /etc/locale.gen /mnt/etc/locale.gen`,
+        `cp /etc/os-release /mnt/etc/os-release`,
+        `cp /etc/lsb-release /mnt/etc/lsb-release`,
+        `echo "orion-linux" >/mnt/etc/hostname`,
       );
       this.addTask({
         title: `Instalando a base do sistema...`,
@@ -247,9 +250,11 @@ export class InstallerService {
       title: `Configurando sudo...`,
       commands: [
         `groupadd sudo || true`,
-        `echo "%sudo ALL=(ALL) NOPASSWD: ALL" >>/mnt/etc/sudoers`
+        `echo "%sudo ALL=(ALL) NOPASSWD: ALL" >>/mnt/etc/sudoers`,
+        `echo "%wheel ALL=(ALL) NOPASSWD: ALL" >>/mnt/etc/sudoers`
       ],
     });
+
     if (config.packages_aur?.length) {
       this.addTask({
         title: `Preparando ambiente AUR...`,
